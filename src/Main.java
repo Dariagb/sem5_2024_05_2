@@ -3,16 +3,15 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
-        print(new File("."), "", true);
+        print(new File("src/main/java/org/example/"), "", true);
     }
 
-    static void print(File file, String indent, boolean isLast){
+    static void print(File file, String indent, boolean isLast) {
         System.out.print(indent);
-        if (isLast){
+        if (isLast) {
             System.out.print("└─");
             indent += "  ";
-        }
-        else {
+        } else {
             System.out.print("├─");
             indent += "│ ";
         }
@@ -20,30 +19,18 @@ public class Main {
 
         File[] files = file.listFiles();
 
-        int subDirTotal = 0;
-        int fileTotal = 0;
-        for (int i = 0; i < files.length; i++){
-            if (files[i].isDirectory()){
-                subDirTotal++;
-            } else {
-                fileTotal++;
-            }
-        }
-
-        int subDirCounter = 0;
-        int fileCounter = 0;
-        for (int i = 0; i < files.length; i++){
-            if (files[i].isDirectory()){
-                print(files[i], indent, subDirTotal == ++subDirCounter);
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory()) {
+                print(files[i], indent, i == files.length - 1);
             } else {
                 System.out.print(indent);
-                if (fileTotal == ++fileCounter){
-                    System.out.print("└─");
+                if (i == files.length - 1) {
+                    System.out.println("└─" + files[i].getName());
                 } else {
-                    System.out.print("├─");
+                    System.out.println("├─" + files[i].getName());
                 }
-                System.out.println(files[i].getName());
             }
         }
     }
-}
+    }
+
